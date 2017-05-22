@@ -23,9 +23,20 @@ body{
     font-size: 1.4rem;
     font-family: 'fontawesome';
 }
+h1, h2, h3, h4, {
+    margin: 0;
+    font-weight: normal;
+    font-family: Georgia,"Times New Roman",Times,serif;    
+}
 ul{
     padding: 0;
     list-style: none;
+}
+figure{
+    width: 305px;
+    height: 210px;
+    margin: 0;
+    overflow: hidden;
 }
 .header{
     height: 140px;
@@ -88,7 +99,7 @@ a:link, a:visited{
 .navi-list{
     font-family: Verdana,Geneva,sans-serif;
     margin: 0;
-    padding: 22px 0;
+    padding: 18px 0;
     list-style: none;
     color: #fff;
 }
@@ -104,8 +115,8 @@ a:link, a:visited{
 .navi-list:first-child{
     border-left: 1px solid #252b34;     
 }
-.main-content{
-    background: url(images/demo/backgrounds/01.png) no-repeat;
+.main-container{
+    background: url(images/demo/backgrounds/01.png);        
     height: 50%;
     padding: 150px;    
 }
@@ -142,4 +153,29 @@ a:link, a:visited{
     background: #fff;
     color: #82b440;
     padding: 15px 20px 17px;  
+}
+.main-container-2{
+    height: 540px;
+    background-color: #252b34;
+    padding: 80px 120px 80px 150px;
+}
+[class^=box-wrapper-] {
+    width: 305px;
+    float: left;
+    margin-right: 30px;
+}
+[class$=box]{
+    background-color: #fff;
+    padding: 20px;
+}
+.box1-heading, .box2-heading, .box3-heading{
+    margin: 0 0 10px 0;
+    font-size: 2.2rem;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-weight: normal;    
+}
+.box1-detail{
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
