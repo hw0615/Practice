@@ -1,0 +1,15 @@
+.body{
+    padding: 0;
+    margin: 0;
+}
+
+.section1{
+    width: 50%;
+    background-color: yellow;
+    float: left;
+}
+.section2{
+    width: 50%;
+    background-color: blue;
+    float: right;
+}
