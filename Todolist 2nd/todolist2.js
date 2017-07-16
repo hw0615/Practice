@@ -19,7 +19,9 @@
         make_ul.innerHTML += 
         '<li class="todo">'+
             // '<label for="list"></label>'+
-            '<input class="todo-list" type="checkbox">'+input.value+'</li>';
+            '<input class="todo-list" type="checkbox">'+
+            '<span>'+input.value+'</span>'+
+            '</li>';
         input.value = '';
     }
     function dellist() {
