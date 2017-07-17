@@ -1,13 +1,17 @@
+// Calendar
 (function (global, $){
   'use strict';
    
-  var cal = new Calendar();
+  var calendar = new Calendar();
 
-  // 생성자 함수
+  // 생성자 함수 Calender
   function Calendar() {
+
     var that = this;
     var currentMonth = new Date();
     currentMonth.setDate(1);
+
+    // 초기 실행 함수
     this.init = function() {
       that.renderCalendar();
       that.btnEvent();
@@ -20,36 +24,49 @@
       for (var i = 0; i < 7; i++) {
         arrTable.push('<col width="100">');
       }
-      arrTable.push('</colgroup><thead><tr>');
-      var arrWeek = "일월화수목금토".split("");
+      arrTable.push('</colgroup>');
+
+      // thead 영역
+      arrTable.push('<thead><tr>');
+      var arrWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+
+      // 토, 일요일에 'sat', 'sun' 클래스 추가
       for (var i = 0, len = arrWeek.length ; i < len; i++) {
-        var dayClass = '';
-        dayClass += i % 7 === 0 ? 'sun' : '';
-        dayClass += i % 7 === 6 ? 'sat' : '';
-        arrTable.push('<td class="'+dayClass+'">' + arrWeek[i] + '</td>');
+        var weekendClass = '';
+        weekendClass += i % 7 === 0 ? 'sun' : '';
+        weekendClass += i % 7 === 6 ? 'sat' : '';
+        arrTable.push('<td class="'+weekendClass+'">' + arrWeek[i] + '</td>');
       }
       arrTable.push('</tr></thead>');
+
+      // tbody 영역
       arrTable.push('<tbody>');
-      var willChangeMonth = new Date(currentMonth.getTime());
+
+      // 달력의 각 칸에 들어가는 날짜
+      var targetDate = new Date(currentMonth.getTime());
+      // 매월 1일이 있는 주의 첫째 날(일요일)
+      // 달력의 첫째 칸에 들어가는 targetDate
+
 
       // 1일에서 1일의 요일을 빼면 그 주 첫번째 날이 나온다.
-      willChangeMonth.setDate(willChangeMonth.getDate() - willChangeMonth.getDay());
+      targetDate.setDate(targetDate.getDate() - targetDate.getDay());
 
       for (var i = 0; i < 100; i++) {
         if( i % 7 == 0) {
           arrTable.push('<tr>');
         }
         
-        var dayClass = 'date-cell '
-        dayClass += currentMonth.getMonth() !== willChangeMonth.getMonth() ? 'not-this-month ' : '';
-        dayClass += i % 7 == 0 ? 'sun' : '';
-        dayClass += i % 7 == 6 ? 'sat' : '';        
-        arrTable.push('<td class="'+dayClass+'">' + willChangeMonth.getDate()+ '</td>' );
-        willChangeMonth.setDate(willChangeMonth.getDate() + 1);
+        var weekendClass = 'date-cell '
+        weekendClass += currentMonth.getMonth() !== targetDate.getMonth() ? 'not-this-month ' : '';
+        weekendClass += i % 7 == 0 ? 'sun' : '';
+        weekendClass += i % 7 == 6 ? 'sat' : '';     
+
+        arrTable.push('<td class="'+weekendClass+'">' + '<a href="" data-targetdate=" '+ targetDate +' ">' + targetDate.getDate() + '</a></td>' );
+        targetDate.setDate(targetDate.getDate() + 1);
 
         if ( i % 7 == 6 ) {
           arrTable.push('</tr>');
-          if( currentMonth.getMonth() !== willChangeMonth.getMonth()) {
+          if( currentMonth.getMonth() != targetDate.getMonth()) {
             break;
           }
         }
@@ -82,6 +99,54 @@
       that.renderCalendar();      
     }
   }
-  cal.init();  
+  calendar.init();
+  // global.calendar = cal 
+
+})(window, window.jQuery);
+
+// Board & Post
+(function (global, $){
+  'use strict';
+   
+  // Borad
+  var day_board = new Board();
+
+  function Board() {
+
+    var $board_link = $('a').on('click', makeBoard);
+
+    function makeBoard(e) {
+      e.preventDefault();
+      
+      var board_html = '';
+      var $e_target = $(e.target);
+
+      var post_data = $e_target.data('targetdate');
+
+
+      // jQuery 방식
+      board_html += '<div class="board-date">' + 
+      post_data.split(' ').slice(1,4).join(' ') + '</div>'
+
+      // DOM 방식
+      // board_html += '<div class="board-date">' + e.target.dataset.targetdate + '</div>'
+
+      board_html += '<button type="button" class="btn-add"><span>Add</span></button><ul class="post-list"></ul>'
+      $('.board-wrapper').html(board_html);
+
+      $('.board-wrapper').addClass('board-active');
+
+      addList();
+    }
+  }
+
+  // Post
+  function addList() {
+    $('.btn-add').on('click', function(e) {
+      e.preventDefault();
+      var $e_target = $(e.target);
+      $e_target.next().append('<li class="post-item"><input type="text"><div class="btn-group"><button type="button">save</button><button type="button">modify</button><button type="button">delete</button></div></li>');
+    }
+  )};
 
 })(window, window.jQuery);
